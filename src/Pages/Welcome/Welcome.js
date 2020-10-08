@@ -4,7 +4,7 @@ import words from "../../HTMH-words.png";
 import {Button, Form, Modal} from "semantic-ui-react";
 import '../../Styles/WelcomePage.css'
 
-class welcome extends Component{
+export default class Welcome extends Component{
 
     constructor(props) {
         super(props);
@@ -62,5 +62,3 @@ class welcome extends Component{
 
 
 }
-
-export default welcome;
