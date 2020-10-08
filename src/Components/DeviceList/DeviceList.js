@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Icon, Grid, Popup, Divider} from "semantic-ui-react";
+import '../../Styles/HomePage.css'
 
 
 export default class DeviceList extends Component {
@@ -20,7 +21,7 @@ export default class DeviceList extends Component {
 
     splitInCols(numOfCols){
         let items = this.state.list
-        const itemsLength = this.state.list.length;
+        const itemsLength = items.length;
         const rowsNum = itemsLength/numOfCols;
         let matrix = [];
         for (let i=0; i < rowsNum; i++){
@@ -38,23 +39,26 @@ export default class DeviceList extends Component {
     }
 
     render() {
-        console.log(this.splitInCols(3))
         return(
             <div>
                 <h3>
                     Device List
                 </h3>
                 <Divider />
-                <Grid columns={3} divided>
+                <Grid
+                    columns={3}
+                    divided
+                    stackable
+                >
                     {
                         this.splitInCols(3).map((row, idx)=>(
                             <Grid.Row key={idx}>
-                                {row.map((item, idx)=>(
+                                {row.map((item)=>(
                                     <Grid.Column>
                                         <Popup
                                         trigger={
                                             <Icon key={item.mac} size={'large'} name={'computer'}>
-                                                {item.ip}
+                                                <span className="device-list-text">{item.ip}</span>
                                             </Icon>
                                         }
                                         >

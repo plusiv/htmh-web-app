@@ -23,7 +23,7 @@ export default class NavBar extends Component {
           active={activeItem === 'home'}
           onClick={this.handleItemClick}
         >
-          Home
+            <span><b>Home</b></span>
         </Menu.Item>
 
         <Menu.Item
@@ -31,14 +31,14 @@ export default class NavBar extends Component {
           active={activeItem === 'l2vpn-services'}
           onClick={this.handleItemClick}
         >
-          L2VPN Services
+            <span><b>L2VPN Services</b></span>
         </Menu.Item>
         <Menu.Item
           name='settings'
           active={activeItem === 'settings'}
           onClick={this.handleItemClick}
         >
-          Settings
+            <span><b>Settings</b></span>
         </Menu.Item>
         <Menu.Item
           name='logout'
@@ -46,7 +46,7 @@ export default class NavBar extends Component {
           onClick={this.handleItemClick}
           position={'right'}
         >
-          Logout
+          <span><b>Logout</b></span>
         </Menu.Item>
       </Menu>
 
