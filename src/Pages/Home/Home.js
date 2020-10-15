@@ -15,7 +15,7 @@ export default class Home extends Component{
         return(
             <div className="container">
                 <Segment>
-                    <DeviceList/>
+                    <DeviceList name={'My Devices'}/>
                 </Segment>
             </div>
 

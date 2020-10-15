@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Icon, Grid, Popup, Divider} from "semantic-ui-react";
 import '../../Styles/HomePage.css'
+import EditableLabel from 'react-editable-label';
+
 
 
 export default class DeviceList extends Component {
@@ -8,13 +10,13 @@ export default class DeviceList extends Component {
         super(props);
         this.state = {
             list: [
-                {ip:'10.10.0.1', mac: 'ff:ff:ff:ff:00', virtualIp: '10.10.1.1'},
-                {ip:'10.10.0.2', mac: 'ff:ff:ff:ff:01', virtualIp: '10.10.1.2'},
-                {ip:'10.10.0.3', mac: 'ff:ff:ff:ff:02', virtualIp: '10.10.1.3'},
-                {ip:'10.10.0.4', mac: 'ff:ff:ff:ff:03', virtualIp: '10.10.1.4'},
-                {ip:'10.10.0.5', mac: 'ff:ff:ff:ff:04', virtualIp: '10.10.1.5'},
-                {ip:'10.10.0.6', mac: 'ff:ff:ff:ff:05', virtualIp: '10.10.1.6'},
-                {ip:'10.10.0.7', mac: 'ff:ff:ff:ff:06', virtualIp: ''},
+                {ip:'10.10.0.1', mac: 'ff:ff:ff:ff:00', virtualIp: '10.10.1.1', friendlyName: '10.10.0.1'},
+                {ip:'10.10.0.2', mac: 'ff:ff:ff:ff:01', virtualIp: '10.10.1.2', friendlyName: '10.10.0.2'},
+                {ip:'10.10.0.3', mac: 'ff:ff:ff:ff:02', virtualIp: '10.10.1.3', friendlyName: '10.10.0.3'},
+                {ip:'10.10.0.4', mac: 'ff:ff:ff:ff:03', virtualIp: '10.10.1.4', friendlyName: '10.10.0.4'},
+                {ip:'10.10.0.5', mac: 'ff:ff:ff:ff:04', virtualIp: '10.10.1.5', friendlyName: '10.10.0.5'},
+                {ip:'10.10.0.6', mac: 'ff:ff:ff:ff:05', virtualIp: '10.10.1.6', friendlyName: '10.10.0.6'},
+                {ip:'10.10.0.7', mac: 'ff:ff:ff:ff:06', virtualIp: '', friendlyName: '10.10.0.7'},
             ]
         };
     }
@@ -42,7 +44,7 @@ export default class DeviceList extends Component {
         return(
             <div>
                 <h3>
-                    Device List
+                    {this.props.name}
                 </h3>
                 <Divider />
                 <Grid
@@ -58,7 +60,15 @@ export default class DeviceList extends Component {
                                         <Popup
                                         trigger={
                                             <Icon key={item.mac} size={'large'} name={'computer'}>
-                                                <span className="device-list-text">{item.ip}</span>
+                                                <span className="device-list-text">{
+                                                    <EditableLabel
+                                                        inputClass
+                                                        initialValue={item.friendlyName}
+                                                        save={value => {
+                                                            console.log(`Saving '${value}'`);
+                                                        }}
+                                                    />
+                                                }</span>
                                             </Icon>
                                         }
                                         >
