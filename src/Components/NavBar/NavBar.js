@@ -27,11 +27,11 @@ export default class NavBar extends Component {
         </Menu.Item>
 
         <Menu.Item
-          name='l2vpn-services'
-          active={activeItem === 'l2vpn-services'}
+          name='services'
+          active={activeItem === 'services'}
           onClick={this.handleItemClick}
         >
-            <span><b>L2VPN Services</b></span>
+            <span><b>Services</b></span>
         </Menu.Item>
         <Menu.Item
           name='settings'
