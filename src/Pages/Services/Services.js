@@ -1,15 +1,14 @@
 import React, {Component} from "react";
-import {Button, Divider, Form, Icon, Modal, Segment} from "semantic-ui-react";
+import {Button, Divider, Icon, Segment} from "semantic-ui-react";
 import '../../Styles/HomePage.css'
-import CreateNewL2VPN from "../../Components/Forms/CreateNewL2VPN";
+import CreateNewHTMH from "../../Components/Forms/CreateNewHTMH";
+import SubscribeToHTMH from "../../Components/Forms/SubscribeToHTMH";
 
 export default class Services extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {
-            openL2VPNForm: false
-        };
+        this.state = {};
     }
 
 
@@ -18,22 +17,16 @@ export default class Services extends Component{
             <div className="container">
                 <Segment>
                     <h3>
-                        L2VPN
+                        Home-To-Multi-Home
                     </h3>
-                    <Divider />
-                    <Button
-                        primary
-                        icon
-                        labelPosition={'left'}
-                        onClick={()=>this.setState({openL2VPNForm:true})}
-                    >
-                        Create New
-                        <Icon name={'plus circle'}/>
-                    </Button>
-                    <CreateNewL2VPN open={this.state.openL2VPNForm}/>
+                    <Divider/>
+                    <Button.Group>
+                        <CreateNewHTMH/>
+                        <Button.Or/>
+                        <SubscribeToHTMH/>
+                    </Button.Group>
                 </Segment>
             </div>
-
         );
     };
 }

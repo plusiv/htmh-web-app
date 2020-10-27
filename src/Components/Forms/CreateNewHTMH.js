@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Modal, Button, Form, Label } from 'semantic-ui-react';
+import {Modal, Button, Form, Label, Icon} from 'semantic-ui-react';
 
 
 
-export default class CreateNewL2VPN extends Component {
+export default class CreateNewHTMH extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,14 +38,22 @@ export default class CreateNewL2VPN extends Component {
     }
 
     render() {
-
         const {todayDatetime, dateTimeThirtyMinLater} = this.getDates()
         console.log(todayDatetime, dateTimeThirtyMinLater)
 
         return (
             <Modal
                 dimmer={'blurring'}
-                open={this.props.open}
+                trigger={
+                    <Button
+                        primary
+                        icon
+                        labelPosition={'left'}
+                    >
+                        Create New
+                        <Icon name={'plus circle'}/>
+                    </Button>
+                }
             >
                 <Modal.Header>Create New L2VPN Service</Modal.Header>
                 <Modal.Content>
