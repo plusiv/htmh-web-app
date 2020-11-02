@@ -20,7 +20,12 @@ export default class Layout extends Component{
         return(
             <Router>
                 <div className={'Body'}>
-                    <Route path={'/'} component={NavBar}/>
+                    <Route
+                        path={'/'}
+                        render={(props)=>(
+                            <NavBar {...props} historyPush={this.props.history}/>
+                        )}
+                    />
                     <Switch>
                         <Route path={'/services'} component={Services}/>
                         <Route path={'/home'} component={Home}/>

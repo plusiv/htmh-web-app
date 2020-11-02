@@ -45,7 +45,7 @@ export async function isAuthenticated() {
 
 export async function removeAccessToken(){
    try{
-       const resp = await axios.get(serverURL + apiEndPoints.authentication.logout, axiosConfig);
+       const resp = await axios.get(serverURL + apiEndPoints.config.authentication.logout, axiosConfig);
        return resp
    }catch (e) {
        console.log(e);

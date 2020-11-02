@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import { Menu } from 'semantic-ui-react'
 import logo from "../../htmh_logo.png"
-import { Link } from 'react-router-dom';
 import {endPoints} from "../../Utils/Config";
+import {removeAccessToken} from "../../AAA/Session";
+import {Redirect} from "react-router-dom";
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -15,6 +16,15 @@ export default class NavBar extends Component {
         this.props.history.push(endPoints.defaultPage + `${name}` )
 
     }
+
+    logOut(){
+      removeAccessToken().then(res=>{
+          if (res.status === 200){
+              this.props.historyPush.push(endPoints.loginPage)
+          }
+      }
+      );
+    };
 
     render() {
         console.log(this.props)
@@ -49,9 +59,7 @@ export default class NavBar extends Component {
                     <span><b>Settings</b></span>
                 </Menu.Item>
                 <Menu.Item
-                  name='logout'
-                  active={activeItem === 'logout'}
-                  onClick={this.handleItemClick}
+                  onClick={this.logOut.bind(this)}
                   position={'right'}
                 >
                   <span><b>Logout</b></span>
