@@ -56,10 +56,10 @@ export default class DeviceList extends Component {
                         this.splitInCols(3).map((row, idx)=>(
                             <Grid.Row key={idx}>
                                 {row.map((item)=>(
-                                    <Grid.Column>
+                                    <Grid.Column key={item.mac}>
                                         <Popup
                                         trigger={
-                                            <Icon key={item.mac} size={'large'} name={'computer'}>
+                                            <Icon size={'large'} name={'computer'}>
                                                 <span className="device-list-text">{
                                                     <EditableLabel
                                                         inputClass
@@ -79,7 +79,6 @@ export default class DeviceList extends Component {
                                             </Popup.Content>
 
                                         </Popup>
-
                                     </Grid.Column>
                                 ))}
                             </Grid.Row>

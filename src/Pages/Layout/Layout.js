@@ -16,13 +16,14 @@ export default class Layout extends Component{
 
 
     render() {
+        console.log('klk', this.props)
         return(
             <Router>
                 <div className={'Body'}>
-                    <NavBar/>
+                    <Route path={'/'} component={NavBar}/>
                     <Switch>
                         <Route path={'/services'} component={Services}/>
-                        <Route path={'/'} component={Home}/>
+                        <Route path={'/home'} component={Home}/>
                     </Switch>
                 </div>
             </Router>

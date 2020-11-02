@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { Menu } from 'semantic-ui-react'
 import logo from "../../htmh_logo.png"
 import { Link } from 'react-router-dom';
+import {endPoints} from "../../Utils/Config";
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -9,10 +10,14 @@ export default class NavBar extends Component {
         this.state = {}
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleItemClick = (e, { name }) => {
+        this.setState({ activeItem: name })
+        this.props.history.push(endPoints.defaultPage + `${name}` )
+
+    }
 
     render() {
-
+        console.log(this.props)
         const { activeItem } = this.state;
         return(
 
@@ -25,7 +30,7 @@ export default class NavBar extends Component {
                   active={activeItem === 'home'}
                   onClick={this.handleItemClick}
                 >
-                    <Link to={'/Home'}><span><b>Home</b></span></Link>
+                    <span><b>Home</b></span>
                 </Menu.Item>
 
 
@@ -34,7 +39,7 @@ export default class NavBar extends Component {
                   active={activeItem === 'services'}
                   onClick={this.handleItemClick}
                 >
-                    <Link to={'/services'}><span><b>Services</b></span></Link>
+                    <span><b>Services</b></span>
                 </Menu.Item>
                 <Menu.Item
                   name='settings'
