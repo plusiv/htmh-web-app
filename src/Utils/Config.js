@@ -7,6 +7,9 @@ export const apiEndPoints = {
             isAuth: '/api/v1/auth/is-auth',
             logout: '/api/v1/auth/logout'
         }
+    },
+    device: {
+        list: '/api/v1/device/list'
     }
 }
 

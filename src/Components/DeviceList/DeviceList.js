@@ -22,7 +22,8 @@ export default class DeviceList extends Component {
     }
 
     splitInCols(numOfCols){
-        let items = this.state.list
+        console.log(this.props.devices)
+        let items = this.props.devices
         const itemsLength = items.length;
         const rowsNum = itemsLength/numOfCols;
         let matrix = [];

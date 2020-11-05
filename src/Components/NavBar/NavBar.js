@@ -3,7 +3,7 @@ import { Menu } from 'semantic-ui-react'
 import logo from "../../htmh_logo.png"
 import {endPoints} from "../../Utils/Config";
 import {removeAccessToken} from "../../AAA/Session";
-import {Redirect} from "react-router-dom";
+
 
 export default class NavBar extends Component {
     constructor(props) {
