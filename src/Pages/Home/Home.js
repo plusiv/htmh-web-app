@@ -29,7 +29,11 @@ export default class Home extends Component{
         return(
             <div className="container">
                 <Segment>
-                    <DeviceList name={'My Devices'} devices={this.state.devicesList}/>
+                    <DeviceList
+                        editable={true}
+                        name={'My Devices'}
+                        devices={this.state.devicesList}
+                    />
                 </Segment>
             </div>
 

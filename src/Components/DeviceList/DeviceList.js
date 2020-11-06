@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {Icon, Grid, Popup, Divider} from "semantic-ui-react";
 import '../../Styles/HomePage.css'
-import EditableLabel from 'react-editable-label';
+import EditableLabel from '../EditableLabel/EditableLabel'
+import axios from "axios";
+import {apiEndPoints, axiosConfig, serverURL} from "../../Utils/Config";
 
 
 
@@ -41,7 +43,21 @@ export default class DeviceList extends Component {
         return matrix
     }
 
+
+    onEditFriendlyName(textValue, macValue){
+        if (textValue !== macValue){
+            axios.put(serverURL + apiEndPoints.device.setFriendlyName, {newFriendlyName: textValue,
+                device:macValue }, axiosConfig)
+                .then(res=>{
+                    console.log(res.data)
+                })
+                .catch(e=> console.log('A problem has occurred while setting new friendly name ', e)
+                )
+        }
+    }
+
     render() {
+        const numOfCols = 4
         return(
             <div>
                 <h3>
@@ -49,28 +65,26 @@ export default class DeviceList extends Component {
                 </h3>
                 <Divider />
                 <Grid
-                    columns={3}
+                    columns={numOfCols}
                     divided
                     stackable
+                    textAlign={'left'}
                 >
                     {
-                        this.splitInCols(3).map((row, idx)=>(
+                        this.splitInCols(numOfCols).map((row, idx)=>(
                             <Grid.Row key={idx}>
                                 {row.map((item)=>(
                                     <Grid.Column key={item.mac}>
                                         <Popup
                                         trigger={
-                                            <Icon size={'large'} name={'computer'}>
-                                                <span className="device-list-text">{
-                                                    <EditableLabel
-                                                        inputClass
-                                                        initialValue={item.friendlyName}
-                                                        save={value => {
-                                                            console.log(`Saving '${value}'`);
-                                                        }}
-                                                    />
-                                                }</span>
-                                            </Icon>
+                                            <span className="device-list-text">
+                                                {<EditableLabel
+                                                    disable={!this.props.editable}
+                                                    text={item.friendlyName}
+                                                    onChange={(textValue)=>this.onEditFriendlyName(textValue, item.mac)}
+                                                />}
+                                            </span>
+
                                         }
                                         >
                                             <Popup.Content>

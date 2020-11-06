@@ -9,7 +9,8 @@ export const apiEndPoints = {
         }
     },
     device: {
-        list: '/api/v1/device/list'
+        list: '/api/v1/device/list',
+        setFriendlyName: '/api/v1/device/set-friendly-name'
     }
 }
 
