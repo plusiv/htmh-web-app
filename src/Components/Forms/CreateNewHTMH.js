@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Modal, Button, Form, Label, Icon} from 'semantic-ui-react';
+import axios from "axios";
+import {apiEndPoints, axiosConfig, serverURL} from "../../Utils/Config";
 
 
 
@@ -7,7 +9,16 @@ export default class CreateNewHTMH extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showSecretKey: 'password'
+            modalOpen: false,
+            showSecretKey: 'password',
+            totalFee: '--',
+            agree: false,
+            serviceData: {
+                startDatetime: this.getDates().todayDatetime,
+                endDatetime: this.getDates().dateTimeThirtyMinLater,
+                subscribers: 2,
+                secretKet: '',
+            }
         }
     }
 
@@ -37,13 +48,48 @@ export default class CreateNewHTMH extends Component {
         }
     }
 
+    getFee() {
+        const params = {
+            startDatetime: this.state.serviceData.startDatetime,
+            endDatetime: this.state.serviceData.endDatetime,
+            subs: this.state.serviceData.subscribers}
+
+        axios.post(serverURL + apiEndPoints.compute.fee, params, axiosConfig)
+                .then(res=>{
+                    this.setState({totalFee: res.data.fee})
+                })
+                .catch(e=> console.log('A problem has occurred ', e)
+                )
+    }
+
+    componentDidMount() {
+        this.getFee()
+    }
+
+
+    changeFormHandle(e, {name, value}){
+        console.log('name and value ', name, value)
+        this.setState((prevState)=>({
+            ...prevState,
+            serviceData: {
+                ...prevState.serviceData,
+                [name] : value
+            }
+        }))
+    }
+
+    closeModal = ()=> {this.setState({modalOpen: false})}
+    checkboxHandler = ()=> {this.setState((prevState)=>({...prevState, agree: !prevState.agree}))}
+
     render() {
         const {todayDatetime, dateTimeThirtyMinLater} = this.getDates()
-        console.log(todayDatetime, dateTimeThirtyMinLater)
 
         return (
             <Modal
                 dimmer={'blurring'}
+                open={this.state.modalOpen}
+                onOpen={()=>this.setState({modalOpen: true})}
+                onClose={()=> this.closeModal()}
                 trigger={
                     <Button
                         primary
@@ -63,19 +109,29 @@ export default class CreateNewHTMH extends Component {
                                         label='Start time'
                                         type={'datetime-local'}
                                         min={todayDatetime}
-                                        value={todayDatetime}
+                                        defaultValue={this.state.serviceData.startDatetime}
+                                        name={'startDatetime'}
+                                        onChange={(e, {name, value})=>this.changeFormHandle(e, {name, value})}
+                                        onBlur={this.getFee.bind(this)}
                             />
                             <Form.Input fluid
                                         label='End time'
                                         type={'datetime-local'}
                                         min={dateTimeThirtyMinLater}
-                                        value={dateTimeThirtyMinLater}
+                                        defaultValue={this.state.serviceData.endDatetime}
+                                        name={'endDatetime'}
+                                        onChange={(e, {name, value})=>this.changeFormHandle(e, {name, value})}
+                                        onBlur={this.getFee.bind(this)}
                             />
                             <Form.Input fluid
                                         label={'Subscribers'}
                                         type={'number'}
-                                        min={2}
+                                        min={"2"}
+                                        defaultValue={this.state.serviceData.subscribers}
                                         width={2}
+                                        name={'subscribers'}
+                                        onChange={(e, {name, value})=>this.changeFormHandle(e, {name, value})}
+                                        onBlur={this.getFee.bind(this)}
                             />
                             <Form.Input fluid
                                         label={'Secret Key'}
@@ -85,6 +141,8 @@ export default class CreateNewHTMH extends Component {
                                             icon: 'eye',
                                             onClick: this.toggleEye.bind(this)
                                         }}
+                                        name={'secretKey'}
+                                        onChange={(e, {name, value})=>this.changeFormHandle(e, {name, value})}
                             />
                         </Form.Group>
                         <Form.Group>
@@ -93,18 +151,30 @@ export default class CreateNewHTMH extends Component {
                                 size={'large'}
                             >
                                 Total:
-                            <Label.Detail>$50</Label.Detail>
+                            <Label.Detail
+                                content={this.state.totalFee}
+                            />
                         </Label>
                         </Form.Group>
-
-                        <Form.Checkbox label='I agree to the Terms and Conditions' />
+                        <Form.Checkbox
+                            label='I agree to the Terms and Conditions'
+                            name={'agree'}
+                            defaultValue={this.state.serviceData.agree}
+                            onChange={()=>this.checkboxHandler()}
+                        />
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button negative>
+                    <Button
+                        negative
+                        onClick={()=> this.closeModal()}
+                    >
                         Cancel
                     </Button>
-                    <Button positive>
+                    <Button
+                        positive
+                        disabled={!this.state.agree}
+                    >
                         Accept
                     </Button>
                 </Modal.Actions>

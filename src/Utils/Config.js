@@ -11,6 +11,9 @@ export const apiEndPoints = {
     device: {
         list: '/api/v1/device/list',
         setFriendlyName: '/api/v1/device/set-friendly-name'
+    },
+    compute: {
+      fee: '/api/v1/compute/fee'
     }
 }
 
