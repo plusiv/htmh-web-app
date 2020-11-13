@@ -8,6 +8,13 @@ export const apiEndPoints = {
             logout: '/api/v1/auth/logout'
         }
     },
+    services:{
+        htmh: {
+            create: '/api/v1/services/htmh/create',
+            subscribe: '/api/v1/services/htmh/subscribe'
+        }
+    },
+
     device: {
         list: '/api/v1/device/list',
         setFriendlyName: '/api/v1/device/set-friendly-name'

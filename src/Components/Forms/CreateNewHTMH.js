@@ -17,7 +17,7 @@ export default class CreateNewHTMH extends Component {
                 startDatetime: this.getDates().todayDatetime,
                 endDatetime: this.getDates().dateTimeThirtyMinLater,
                 subscribers: 2,
-                secretKet: '',
+                secretKey: '',
             }
         }
     }
@@ -77,6 +77,17 @@ export default class CreateNewHTMH extends Component {
             }
         }))
     }
+
+    onSubmit(){
+        axios.post(serverURL + apiEndPoints.services.htmh.create, {serviceData: this.state.serviceData},
+            axiosConfig)
+                .then(res=>{
+                    console.log(res.data)
+                    this.closeModal()
+                })
+                .catch(e=> console.log('A problem has occurred', e))
+    }
+
 
     closeModal = ()=> {this.setState({modalOpen: false})}
     checkboxHandler = ()=> {this.setState((prevState)=>({...prevState, agree: !prevState.agree}))}
@@ -157,7 +168,7 @@ export default class CreateNewHTMH extends Component {
                         </Label>
                         </Form.Group>
                         <Form.Checkbox
-                            label='I agree to the Terms and Conditions'
+                            label='I agree with the Terms and Conditions'
                             name={'agree'}
                             defaultValue={this.state.serviceData.agree}
                             onChange={()=>this.checkboxHandler()}
@@ -174,6 +185,7 @@ export default class CreateNewHTMH extends Component {
                     <Button
                         positive
                         disabled={!this.state.agree}
+                        onClick={this.onSubmit.bind(this)}
                     >
                         Accept
                     </Button>
