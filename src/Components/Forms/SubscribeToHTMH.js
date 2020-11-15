@@ -8,11 +8,9 @@ import {apiEndPoints, axiosConfig, serverURL} from "../../Utils/Config";
 export default class SubscribeToHTMH extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.open)
         this.state = {
-            openModal: true,
             showSecretKey: 'password',
-            open: this.props.open,
+            open: false,
             agree: false,
             serviceData:{
                 serviceToken: '',
@@ -20,16 +18,6 @@ export default class SubscribeToHTMH extends Component {
             }
 
         }
-    }
-
-    toggleModal(state){
-        if (state){
-            this.setState({open:true})
-        }
-        else {
-          this.setState({open:false})
-        }
-
     }
 
     toggleEye(){
@@ -53,24 +41,22 @@ export default class SubscribeToHTMH extends Component {
     }
 
     onSubmit(){
-        axios.post(serverURL + apiEndPoints.services.htmh.subscribe, {serviceData: this.state.serviceData},
+        axios.put(serverURL + apiEndPoints.services.htmh.subscribe, {serviceData: this.state.serviceData},
             axiosConfig)
                 .then(res=>{
-                    console.log(res.data)
                     this.closeModal()
                 })
                 .catch(e=> console.log('A problem has occurred', e))
     }
 
-    closeModal = ()=> {this.setState({modalOpen: false})}
+    closeModal = ()=> {this.setState({open: false})}
     checkboxHandler = ()=> {this.setState((prevState)=>({...prevState, agree: !prevState.agree}))}
 
     render() {
-
-        console.log(this.state.open)
         return (
             <Modal
                 dimmer={'blurring'}
+                open={this.state.open}
                 trigger={<Button
                             icon
                             labelPosition={'right'}
@@ -79,10 +65,10 @@ export default class SubscribeToHTMH extends Component {
                             Subscribe
                             <Icon name={'pencil alternate'}/>
                         </Button>}
-                onClose={()=>this.setState({openModal: false})}
-                onOpen={()=>this.closeModal()}
+                onClose={()=>this.closeModal()}
+                onOpen={()=>this.setState({open:true})}
             >
-                <Modal.Header>Create New L2VPN Service</Modal.Header>
+                <Modal.Header>Subscribe to a L2VPN Service</Modal.Header>
                 <Modal.Content>
                     <Form>
                         <Form.Group>

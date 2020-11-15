@@ -42,7 +42,6 @@ export default class Welcome extends Component{
     };
 
     submitUser(){
-        console.log('Clicked!')
         const user = {username: this.state.username, password: this.state.password};
         console.log("The user credentials is ==>", user);
         auth(user).then(

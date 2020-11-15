@@ -17,7 +17,7 @@ function App() {
                 <Switch>
                     <Route path={'/welcome'} component={Welcome}/>
                     <Route path={'/login'} component={Welcome}/>
-                    <PrivateRoute path={endPoints.homePage} redirectPath={endPoints.loginPage} authorization={ isAuthenticated }>
+                    <PrivateRoute path={'/'} redirectPath={endPoints.loginPage} authorization={ isAuthenticated }>
                         <Route path={'/'} component={Layout}/>
                     </PrivateRoute>
                 </Switch>

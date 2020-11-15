@@ -27,7 +27,6 @@ export default class NavBar extends Component {
     };
 
     render() {
-        console.log(this.props)
         const { activeItem } = this.state;
         return(
 
@@ -68,6 +67,4 @@ export default class NavBar extends Component {
 
         );
     }
-
-
 }

@@ -16,7 +16,7 @@ export default class CreateNewHTMH extends Component {
             serviceData: {
                 startDatetime: this.getDates().todayDatetime,
                 endDatetime: this.getDates().dateTimeThirtyMinLater,
-                subscribers: 2,
+                subscribersNum: 2,
                 secretKey: '',
             }
         }
@@ -34,6 +34,7 @@ export default class CreateNewHTMH extends Component {
 
     getDates(){
         const today = new Date();
+        today.setMinutes( today.getMinutes() + 10 )
         const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         const time = today.toTimeString().slice(0,5)
         const dateTime = date+ 'T' +time;
@@ -52,7 +53,7 @@ export default class CreateNewHTMH extends Component {
         const params = {
             startDatetime: this.state.serviceData.startDatetime,
             endDatetime: this.state.serviceData.endDatetime,
-            subs: this.state.serviceData.subscribers}
+            subs: this.state.serviceData.subscribersNum}
 
         axios.post(serverURL + apiEndPoints.compute.fee, params, axiosConfig)
                 .then(res=>{
@@ -138,9 +139,9 @@ export default class CreateNewHTMH extends Component {
                                         label={'Subscribers'}
                                         type={'number'}
                                         min={"2"}
-                                        defaultValue={this.state.serviceData.subscribers}
+                                        defaultValue={this.state.serviceData.subscribersNum}
                                         width={2}
-                                        name={'subscribers'}
+                                        name={'subscribersNum'}
                                         onChange={(e, {name, value})=>this.changeFormHandle(e, {name, value})}
                                         onBlur={this.getFee.bind(this)}
                             />

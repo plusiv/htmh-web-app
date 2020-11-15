@@ -11,7 +11,9 @@ export const apiEndPoints = {
     services:{
         htmh: {
             create: '/api/v1/services/htmh/create',
-            subscribe: '/api/v1/services/htmh/subscribe'
+            subscribe: '/api/v1/services/htmh/subscribe',
+            isCreated: '/api/v1/services/htmh/is-created',
+            getService: '/api/v1/services/htmh/get'
         }
     },
 

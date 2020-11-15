@@ -10,15 +10,16 @@ export default class Home extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            devicesList: []
+            userDevices: [],
+            othersDevices: []
         };
     }
 
     componentDidMount() {
         axios.get(serverURL + apiEndPoints.device.list, axiosConfig)
         .then(res=>{
-            console.log('response==>>', res.data.data);
-            this.setState({devicesList: res.data.data})
+            console.log('response==>>', res.data);
+            this.setState({userDevices: res.data.userDevices, othersDevices: res.data.othersDevices})
         })
         .catch(e=>{console.log(e)})
     }
@@ -32,9 +33,18 @@ export default class Home extends Component{
                     <DeviceList
                         editable={true}
                         name={'My Devices'}
-                        devices={this.state.devicesList}
+                        devices={this.state.userDevices}
                     />
                 </Segment>
+                {this.state.othersDevices.map(device=>(
+                    <Segment key={device.equipment}>
+                        <DeviceList
+                            ditable={false}
+                            name={device.name + "'s Devices"}
+                            devices={device.devices}
+                        />
+                    </Segment>
+                ))}
             </div>
 
         );
