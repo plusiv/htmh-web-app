@@ -13,13 +13,17 @@ export const apiEndPoints = {
             create: '/api/v1/services/htmh/create',
             subscribe: '/api/v1/services/htmh/subscribe',
             isCreated: '/api/v1/services/htmh/is-created',
-            getService: '/api/v1/services/htmh/get'
+            getService: '/api/v1/services/htmh/get',
+            start: '/api/v1/services/htmh/start'
         }
     },
 
     device: {
         list: '/api/v1/device/list',
         setFriendlyName: '/api/v1/device/set-friendly-name'
+    },
+    basic: {
+        fullname: '/api/v1/basic/fullname'
     },
     compute: {
       fee: '/api/v1/compute/fee'

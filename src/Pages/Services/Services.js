@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Divider, Segment, Loader} from "semantic-ui-react";
+import {Button, Divider, Segment} from "semantic-ui-react";
 import '../../Styles/HomePage.css'
 import CreateNewHTMH from "../../Components/Forms/CreateNewHTMH";
 import SubscribeToHTMH from "../../Components/Forms/SubscribeToHTMH";
@@ -41,11 +41,32 @@ export default class Services extends Component{
             .catch(e=> console.log('A problem has occurred', e))
     }
 
+    requestStartHtmh(){
+        axios.get(serverURL + apiEndPoints.services.htmh.start, axiosConfig)
+            .then(res=>{
+                if (res.status === 200){
+                    console.log(res.data)
+                }
+                else {
+
+                }
+            })
+            .catch(e=> console.log('A problem has occurred', e))
+
+    }
 
     render() {
         return(
-            <div className="container">
-                <Segment>
+            <div className="container">>
+                <Button
+                    floated={'left'}
+                    toggle
+                    content={'Refresh'}
+                    icon={'refresh'}
+                    labelPosition={'left'}
+                    onClick={()=>window.location.reload(false)}
+                />
+                <Segment style={{marginTop: '3vmin'}}>
                     <h3>
                         Home-To-Multi-Home
                     </h3>
@@ -62,6 +83,7 @@ export default class Services extends Component{
                                 positive
                                 disabled={!this.state.htmhInfo.permitRun}
                                 style={{marginTop:'5%'}}
+                                onClick={this.requestStartHtmh.bind(this)}
                         >
                             Go
                         </Button>}

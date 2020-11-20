@@ -1,20 +1,33 @@
 import React, {Component} from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 import logo from "../../htmh_logo.png"
-import {endPoints} from "../../Utils/Config";
+import {apiEndPoints, axiosConfig, endPoints, serverURL} from "../../Utils/Config";
 import {removeAccessToken} from "../../AAA/Session";
+import axios from "axios";
 
 
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            fullname: ''
+        }
     }
 
     handleItemClick = (e, { name }) => {
         this.setState({ activeItem: name })
         this.props.history.push(endPoints.defaultPage + `${name}` )
 
+    }
+
+    componentDidMount() {
+        axios.get(serverURL + apiEndPoints.basic.fullname, axiosConfig)
+            .then(res=>{
+                if (res.status === 200){
+                    this.setState({fullname: res.data.fullname})
+                }
+            })
+            .catch(e=> console.log('A problem has occurred', e))
     }
 
     logOut(){
@@ -60,8 +73,16 @@ export default class NavBar extends Component {
                 <Menu.Item
                   onClick={this.logOut.bind(this)}
                   position={'right'}
+                  disabled={true}
                 >
-                  <span><b>Logout</b></span>
+                    <Button
+                        animated={'vertical'}
+                        secondary
+                        onClick={this.logOut.bind(this)}
+                    >
+                        <Button.Content visible>{this.state.fullname}</Button.Content>
+                        <Button.Content hidden> Logout</Button.Content>
+                    </Button>
                 </Menu.Item>
             </Menu>
 

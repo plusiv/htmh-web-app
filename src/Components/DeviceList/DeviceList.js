@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Icon, Grid, Popup, Divider} from "semantic-ui-react";
+import {Message, Grid, Popup, Divider} from "semantic-ui-react";
 import '../../Styles/HomePage.css'
 import EditableLabel from '../EditableLabel/EditableLabel'
 import axios from "axios";
@@ -10,22 +10,14 @@ import {apiEndPoints, axiosConfig, serverURL} from "../../Utils/Config";
 export default class DeviceList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            list: [
-                {ip:'10.10.0.1', mac: 'ff:ff:ff:ff:00', virtualIp: '10.10.1.1', friendlyName: '10.10.0.1'},
-                {ip:'10.10.0.2', mac: 'ff:ff:ff:ff:01', virtualIp: '10.10.1.2', friendlyName: '10.10.0.2'},
-                {ip:'10.10.0.3', mac: 'ff:ff:ff:ff:02', virtualIp: '10.10.1.3', friendlyName: '10.10.0.3'},
-                {ip:'10.10.0.4', mac: 'ff:ff:ff:ff:03', virtualIp: '10.10.1.4', friendlyName: '10.10.0.4'},
-                {ip:'10.10.0.5', mac: 'ff:ff:ff:ff:04', virtualIp: '10.10.1.5', friendlyName: '10.10.0.5'},
-                {ip:'10.10.0.6', mac: 'ff:ff:ff:ff:05', virtualIp: '10.10.1.6', friendlyName: '10.10.0.6'},
-                {ip:'10.10.0.7', mac: 'ff:ff:ff:ff:06', virtualIp: '', friendlyName: '10.10.0.7'},
-            ]
-        };
+        this.state = {}
     }
 
     splitInCols(numOfCols){
-        console.log(this.props.devices)
         let items = this.props.devices
+        if (items.length === 0){
+            return undefined
+        }
         const itemsLength = items.length;
         const rowsNum = itemsLength/numOfCols;
         let matrix = [];
@@ -58,6 +50,7 @@ export default class DeviceList extends Component {
 
     render() {
         const numOfCols = 4
+        const devicesList = this.splitInCols(numOfCols)
         return(
             <div>
                 <h3>
@@ -70,8 +63,13 @@ export default class DeviceList extends Component {
                     stackable
                     textAlign={'left'}
                 >
-                    {
-                        this.splitInCols(numOfCols).map((row, idx)=>(
+                    {   devicesList === undefined ?
+                        <Message
+                            icon='warning circle'
+                            header='No devices yet'
+                            content='Oops! it looks like there are no devices on your network yet.'
+                        /> :
+                        devicesList.map((row, idx)=>(
                             <Grid.Row key={idx}>
                                 {row.map((item)=>(
                                     <Grid.Column key={item.mac}>
