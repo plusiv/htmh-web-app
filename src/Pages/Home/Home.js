@@ -4,6 +4,7 @@ import '../../Styles/HomePage.css'
 import DeviceList from "../../Components/DeviceList/DeviceList";
 import axios from "axios";
 import {apiEndPoints, axiosConfig, serverURL} from "../../Utils/Config";
+import RefreshButton from "../../Components/RefreshButton/RefreshButton";
 
 export default class Home extends Component{
 
@@ -28,8 +29,9 @@ export default class Home extends Component{
     render() {
         console.log(this.props)
         return(
-            <div className="container">
-                <Segment>
+            <div className="container">>
+                <RefreshButton/>
+                <Segment style={{marginTop: '3vmin'}}>
                     <DeviceList
                         editable={true}
                         name={'My Devices'}

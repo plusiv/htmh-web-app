@@ -14,7 +14,8 @@ export const apiEndPoints = {
             subscribe: '/api/v1/services/htmh/subscribe',
             isCreated: '/api/v1/services/htmh/is-created',
             getService: '/api/v1/services/htmh/get',
-            start: '/api/v1/services/htmh/start'
+            start: '/api/v1/services/htmh/start',
+            delete: '/api/v1/services/htmh/delete'
         }
     },
 

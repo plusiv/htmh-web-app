@@ -6,6 +6,7 @@ import SubscribeToHTMH from "../../Components/Forms/SubscribeToHTMH";
 import {apiEndPoints, axiosConfig, serverURL} from "../../Utils/Config";
 import axios from "axios";
 import HTMHInfo from "../../Components/HTMHInfo/HTMHInfo";
+import RefreshButton from "../../Components/RefreshButton/RefreshButton";
 
 export default class Services extends Component{
 
@@ -23,8 +24,10 @@ export default class Services extends Component{
                 subsNum: '',
                 secretKey: '',
                 permitRun: false,
-                isOwner: false
-            }
+                isOwner: false,
+                isRunning: false
+            },
+            submitButtonStatus: true
         };
     }
 
@@ -42,10 +45,18 @@ export default class Services extends Component{
     }
 
     requestStartHtmh(){
+        this.setState({submitButtonStatus: false})
         axios.get(serverURL + apiEndPoints.services.htmh.start, axiosConfig)
             .then(res=>{
                 if (res.status === 200){
-                    console.log(res.data)
+                    this.setState(prevState=>({
+                        ...prevState,
+                        htmhInfo: {
+                            ...prevState.htmhInfo,
+                            isRunning: true,
+                            active: 'Yes'
+                        }
+                    }))
                 }
                 else {
 
@@ -55,17 +66,21 @@ export default class Services extends Component{
 
     }
 
+    requestStopHtmh(){
+        this.setState({submitButtonStatus: false})
+        axios.delete(serverURL + apiEndPoints.services.htmh.delete, axiosConfig)
+            .then(res=>{
+                if (res.status === 200){
+                    window.location.reload(false)
+                }
+            })
+
+    }
+
     render() {
         return(
-            <div className="container">>
-                <Button
-                    floated={'left'}
-                    toggle
-                    content={'Refresh'}
-                    icon={'refresh'}
-                    labelPosition={'left'}
-                    onClick={()=>window.location.reload(false)}
-                />
+            <div className={"container"} >>
+                <RefreshButton/>
                 <Segment style={{marginTop: '3vmin'}}>
                     <h3>
                         Home-To-Multi-Home
@@ -79,20 +94,24 @@ export default class Services extends Component{
                     :
                     <div>
                         <HTMHInfo htmhInfo={this.state.htmhInfo}/>
-                        {this.state.htmhInfo.isOwner && <Button
+                        {(this.state.htmhInfo.isOwner && !this.state.htmhInfo.isRunning) && <Button
                                 positive
-                                disabled={!this.state.htmhInfo.permitRun}
+                                loading={!this.state.submitButtonStatus}
+                                disabled={!this.state.htmhInfo.permitRun || !this.state.submitButtonStatus}
                                 style={{marginTop:'5%'}}
                                 onClick={this.requestStartHtmh.bind(this)}
                         >
                             Go
                         </Button>}
-                        {this.state.htmhInfo.isOwner && <Button
+                        <Button
+                            onClick={this.requestStopHtmh.bind(this)}
+                            loading={!this.state.submitButtonStatus}
+                            disabled={!this.state.submitButtonStatus}
                             negative
                             style={{marginTop:'5%'}}
                         >
                             Delete
-                        </Button>}
+                        </Button>
                     </div>
                     }
                 </Segment>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Modal, Button, List, Icon, Image} from 'semantic-ui-react';
+import {Modal, Button, List, Icon} from 'semantic-ui-react';
 
 
 export default class SubscribersList extends Component {
@@ -37,7 +37,10 @@ export default class SubscribersList extends Component {
                                 <List.Item key={subscriber.equipment}>
                                     <Icon size={'big'} name={'user circle'}/>
                                     <List.Content>
-                                    <List.Header>{subscriber.name}</List.Header>
+                                        {subscriber.active ?<List.Header>{subscriber.name}</List.Header>
+                                            :
+                                           <List.Header><del>{subscriber.name}</del></List.Header>
+                                        }
                                         {'Home Device: ' + subscriber.equipment}
                                     </List.Content>
                                 </List.Item>

@@ -15,7 +15,8 @@ export default class SubscribeToHTMH extends Component {
             serviceData:{
                 serviceToken: '',
                 secretKey: ''
-            }
+            },
+            submitButtonStatus: true
 
         }
     }
@@ -41,10 +42,12 @@ export default class SubscribeToHTMH extends Component {
     }
 
     onSubmit(){
+        this.setState({submitButtonStatus: false})
         axios.put(serverURL + apiEndPoints.services.htmh.subscribe, {serviceData: this.state.serviceData},
             axiosConfig)
                 .then(res=>{
                     this.closeModal()
+                    window.location.reload(false)
                 })
                 .catch(e=> console.log('A problem has occurred', e))
     }
@@ -108,7 +111,8 @@ export default class SubscribeToHTMH extends Component {
                     </Button>
                     <Button
                         positive
-                        disabled={!this.state.agree}
+                        loading={!this.state.submitButtonStatus}
+                        disabled={!this.state.agree || !this.state.submitButtonStatus}
                         onClick={this.onSubmit.bind(this)}
                     >
                         Accept

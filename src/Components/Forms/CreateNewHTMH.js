@@ -18,7 +18,8 @@ export default class CreateNewHTMH extends Component {
                 endDatetime: this.getDates().dateTimeThirtyMinLater,
                 subscribersNum: 2,
                 secretKey: '',
-            }
+            },
+            submitButtonStatus: true
         }
     }
 
@@ -34,12 +35,12 @@ export default class CreateNewHTMH extends Component {
 
     getDates(){
         const today = new Date();
-        today.setMinutes( today.getMinutes() + 10 )
+        today.setMinutes( today.getMinutes() + 5 )
         const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         const time = today.toTimeString().slice(0,5)
         const dateTime = date+ 'T' +time;
 
-        today.setMinutes( today.getMinutes() + 30 )
+        today.setMinutes( today.getMinutes() + 5 )
         const thirtyMinLater = today.toTimeString().slice(0,5)
         const dateTimeThirtyMinLater = date+ 'T' + thirtyMinLater;
 
@@ -80,11 +81,13 @@ export default class CreateNewHTMH extends Component {
     }
 
     onSubmit(){
+        this.setState({submitButtonStatus: false})
         axios.post(serverURL + apiEndPoints.services.htmh.create, {serviceData: this.state.serviceData},
             axiosConfig)
                 .then(res=>{
                     console.log(res.data)
                     this.closeModal()
+                    window.location.reload(false)
                 })
                 .catch(e=> console.log('A problem has occurred', e))
     }
@@ -185,7 +188,8 @@ export default class CreateNewHTMH extends Component {
                     </Button>
                     <Button
                         positive
-                        disabled={!this.state.agree}
+                        loading={!this.state.submitButtonStatus}
+                        disabled={!this.state.agree || !this.state.submitButtonStatus}
                         onClick={this.onSubmit.bind(this)}
                     >
                         Accept
