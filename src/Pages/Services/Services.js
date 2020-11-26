@@ -51,6 +51,7 @@ export default class Services extends Component{
                 if (res.status === 200){
                     this.setState(prevState=>({
                         ...prevState,
+                        submitButtonStatus: true,
                         htmhInfo: {
                             ...prevState.htmhInfo,
                             isRunning: true,
